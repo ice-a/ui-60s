@@ -62,7 +62,7 @@ import List from './components/List.vue';
 import CardImage from './components/CardImage.vue';
 import HistoryTable from './components/Table.vue';
 import HotTop from './components/HotList.vue';
-
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 export default {
   components: {
     Card,
@@ -98,7 +98,7 @@ export default {
   methods: {
     // epic游戏
     async fetchEpicGames() {
-      await axios.get('/api/epic').then(response => {
+      await axios.get(`${apiBaseUrl}/api/epic`).then(response => {
         console.log('log:', response.data);
         this.epicGames.list = [];
         if (response.data.data) {
@@ -114,7 +114,7 @@ export default {
     // 每日新闻60s
     async fetchNews() {
       try {
-        const response = await axios.get('/api/?v2=1');
+        const response = await axios.get(`${apiBaseUrl}/api/?v2=1`);
         console.log('新闻log', response.data);
         if (response.data.data && response.data.data.news) {
           this.newsList = response.data.data.news;
@@ -129,7 +129,7 @@ export default {
     // bing图片
     async fetchBing() {
       try {
-        const response = await axios.get('/api/bing');
+        const response = await axios.get(`${apiBaseUrl}/api/bing`);
         console.log('新闻log', response.data);
         if (response.data.data) {
           this.bing = response.data.data;
@@ -144,7 +144,7 @@ export default {
     // 历史上的今天
     async fetchHistoryData() {
       try {
-        const response = await axios.get('/api/today_in_history');
+        const response = await axios.get(`${apiBaseUrl}/api/today_in_history`);
         console.log('历史log', response.data);
         if (response.data.data) {
           this.historyData = response.data.data.map(item => ({
@@ -162,7 +162,7 @@ export default {
     // 抖音热榜
     async fetchDouyinHotSearch() {
       try {
-        const response = await axios.get('/api/douyin');
+        const response = await axios.get(`${apiBaseUrl}/api/douyin`);
         console.log('新闻log', response.data);
         if (response.data.data) {
           this.douyinHotSearch = response.data.data.map(item => ({
@@ -179,7 +179,7 @@ export default {
     // bili热榜
     async fetchBiliHotSearch() {
       try {
-        const response = await axios.get('/api/bili');
+        const response = await axios.get(`${apiBaseUrl}/api/bili`);
         console.log('新闻log', response.data);
         if (response.data.data) {
           this.biliHotSearch = response.data.data.map(item => ({
@@ -196,7 +196,7 @@ export default {
     // 微博热榜
     async fetchWeiboHotSearch() {
       try {
-        const response = await axios.get('/api/weibo');
+        const response = await axios.get(`${apiBaseUrl}/api/weibo`);
         console.log('新闻log', response.data);
         if (response.data.data) {
           this.weiboHotSearch = response.data.data.map(item => ({
@@ -213,7 +213,7 @@ export default {
     // 知乎热榜
     async fetchZhihuHotSearch() {
       try {
-        const response = await axios.get('/api/zhihu');
+        const response = await axios.get(`${apiBaseUrl}/api/zhihu`);
         console.log('新闻log', response.data);
         if (response.data.data) {
           this.zhihuHotSearch = response.data.data.map(item => ({
@@ -230,7 +230,7 @@ export default {
     // 头条热榜
     async fetchToutiaoHotSearch() {
       try {
-        const response = await axios.get('/api/toutiao');
+        const response = await axios.get(`${apiBaseUrl}/api/toutiao`);
         console.log('新闻log', response.data);
         if (response.data.data) {
           this.toutiaoHotSearch = response.data.data.map(item => ({
