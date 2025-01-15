@@ -98,8 +98,8 @@ export default {
   methods: {
     // epic游戏
     async fetchEpicGames() {
-      await axios.get(`${apiBaseUrl}/api/epic`).then(response => {
-        console.log('log:', response.data);
+      await axios.get(`${apiBaseUrl}/epic`).then(response => {
+        //console.log('log:', response.data);
         this.epicGames.list = [];
         if (response.data.data) {
           this.epicGames.list = response.data.data.map(game => ({
@@ -114,8 +114,8 @@ export default {
     // 每日新闻60s
     async fetchNews() {
       try {
-        const response = await axios.get(`${apiBaseUrl}/api/?v2=1`);
-        console.log('新闻log', response.data);
+        const response = await axios.get(`${apiBaseUrl}/?v2=1`);
+        //console.log('新闻log', response.data);
         if (response.data.data && response.data.data.news) {
           this.newsList = response.data.data.news;
         } else {
@@ -129,8 +129,8 @@ export default {
     // bing图片
     async fetchBing() {
       try {
-        const response = await axios.get(`${apiBaseUrl}/api/bing`);
-        console.log('新闻log', response.data);
+        const response = await axios.get(`${apiBaseUrl}/bing`);
+        //console.log('新闻log', response.data);
         if (response.data.data) {
           this.bing = response.data.data;
         } else {
@@ -144,8 +144,8 @@ export default {
     // 历史上的今天
     async fetchHistoryData() {
       try {
-        const response = await axios.get(`${apiBaseUrl}/api/today_in_history`);
-        console.log('历史log', response.data);
+        const response = await axios.get(`${apiBaseUrl}/today_in_history`);
+        //console.log('历史log', response.data);
         if (response.data.data) {
           this.historyData = response.data.data.map(item => ({
             ...item,
@@ -162,8 +162,8 @@ export default {
     // 抖音热榜
     async fetchDouyinHotSearch() {
       try {
-        const response = await axios.get(`${apiBaseUrl}/api/douyin`);
-        console.log('新闻log', response.data);
+        const response = await axios.get(`${apiBaseUrl}/douyin`);
+        //console.log('新闻log', response.data);
         if (response.data.data) {
           this.douyinHotSearch = response.data.data.map(item => ({
             ...item,
@@ -179,8 +179,8 @@ export default {
     // bili热榜
     async fetchBiliHotSearch() {
       try {
-        const response = await axios.get(`${apiBaseUrl}/api/bili`);
-        console.log('新闻log', response.data);
+        const response = await axios.get(`${apiBaseUrl}/bili`);
+        //console.log('新闻log', response.data);
         if (response.data.data) {
           this.biliHotSearch = response.data.data.map(item => ({
             ...item,
@@ -196,8 +196,8 @@ export default {
     // 微博热榜
     async fetchWeiboHotSearch() {
       try {
-        const response = await axios.get(`${apiBaseUrl}/api/weibo`);
-        console.log('新闻log', response.data);
+        const response = await axios.get(`${apiBaseUrl}/weibo`);
+        //console.log('新闻log', response.data);
         if (response.data.data) {
           this.weiboHotSearch = response.data.data.map(item => ({
             ...item,
@@ -213,8 +213,8 @@ export default {
     // 知乎热榜
     async fetchZhihuHotSearch() {
       try {
-        const response = await axios.get(`${apiBaseUrl}/api/zhihu`);
-        console.log('新闻log', response.data);
+        const response = await axios.get(`${apiBaseUrl}/zhihu`);
+        //console.log('新闻log', response.data);
         if (response.data.data) {
           this.zhihuHotSearch = response.data.data.map(item => ({
             ...item,
@@ -223,15 +223,15 @@ export default {
           console.error('响应数据中没有 news 属性');
         }
       } catch (error) {
-        console.error('请求失败:', error);
+        //console.error('请求失败:', error);
         this.zhihuHotSearch = ['无法获取新闻数据，请稍后再试。'];
       }
     },
     // 头条热榜
     async fetchToutiaoHotSearch() {
       try {
-        const response = await axios.get(`${apiBaseUrl}/api/toutiao`);
-        console.log('新闻log', response.data);
+        const response = await axios.get(`${apiBaseUrl}/toutiao`);
+        //console.log('新闻log', response.data);
         if (response.data.data) {
           this.toutiaoHotSearch = response.data.data.map(item => ({
             ...item,
