@@ -1,58 +1,78 @@
 <template>
-  <a-tabs default-active-key="2">
-    <a-tab-pane key="1" title="epic游戏">
-      <a-col :span="8" :offset="8">
-        <Card :title="epicGames.title" :list="epicGames.list" />
-      </a-col>
-    </a-tab-pane>
-    <a-tab-pane key="2" title="每日新闻60s">
-      <a-col :span="8" :offset="8">
-        <List :title="'每日新闻60s'" :list="newsList" />
-      </a-col>
-    </a-tab-pane>
-    <a-tab-pane key="3">
-      <template #title>bing壁纸</template>
-      <a-col :span="8" :offset="8">
-        <CardImage :bing="bing" />
-      </a-col>
-    </a-tab-pane>
-    <a-tab-pane key="4">
-      <template #title>历史上的今天</template>
-      <a-col :span="16" :offset="4">
-        <HistoryTable :historyData="historyData" />
-      </a-col>
-    </a-tab-pane>
-    <a-tab-pane key="5">
-      <template #title>bili热榜</template>
-      <a-col :span="8" :offset="8">
-        <List :title="'bili热榜'" :list="biliHotSearch" />
-      </a-col>
-    </a-tab-pane>
-    <a-tab-pane key="6">
-      <template #title>微博热榜</template>
-      <a-col :span="8" :offset="8">
-        <List :title="'微博热榜'" :list="weiboHotSearch" />
-      </a-col>
-    </a-tab-pane>
-    <a-tab-pane key="7">
-      <template #title>知乎热榜</template>
-      <a-col :span="8" :offset="8">
-        <List :title="'知乎热榜'" :list="zhihuHotSearch" />
-      </a-col>
-    </a-tab-pane>
-    <a-tab-pane key="8">
-      <template #title>头条热榜</template>
-      <a-col :span="8" :offset="8">
-        <List :title="'头条热榜'" :list="toutiaoHotSearch" />
-      </a-col>
-    </a-tab-pane>
-    <a-tab-pane key="9">
-      <template #title>抖音热榜</template>
-      <a-col :span="16" :offset="4">
-        <HotTop :dataSource="douyinHotSearch" />
-      </a-col>
-    </a-tab-pane>
-  </a-tabs>
+  <a-layout style="height: 100vh;">
+    <!-- 加载动画 -->
+    <div v-if="isBackgroundLoading" class="loading-overlay">
+      <a-spin size="large" tip="加载中..." />
+    </div>
+
+    <!-- Header -->
+    <a-layout-header style="padding-top: 20px; background: transparent;">
+      <a-row>
+        <a-col :span="12" :offset="8">
+          <a-space :size="'large'">
+            <a-button shape="round" @click="handleTabChange('1')">epic游戏</a-button>
+            <a-button shape="round" @click="handleTabChange('2')">每日新闻60s</a-button>
+            <a-button shape="round" @click="handleTabChange('3')">bing壁纸</a-button>
+            <a-button shape="round" @click="handleTabChange('4')">历史上的今天</a-button>
+            <a-button shape="round" @click="handleTabChange('5')">bili热榜</a-button>
+            <a-button shape="round" @click="handleTabChange('6')">微博热榜</a-button>
+            <a-button shape="round" @click="handleTabChange('7')">知乎热榜</a-button>
+            <a-button shape="round" @click="handleTabChange('8')">头条热榜</a-button>
+            <a-button shape="round" @click="handleTabChange('9')">抖音热榜</a-button>
+          </a-space>
+        </a-col>
+      </a-row>
+    </a-layout-header>
+
+    <!-- Content -->
+    <a-layout-content style="margin-top: 20px; width: 60%; margin-left: 20%;">
+      <div v-if="activeKey === '1'">
+        <a-col :span="8" :offset="8">
+          <Card :title="epicGames.title" :list="epicGames.list" />
+        </a-col>
+      </div>
+      <div v-if="activeKey === '2'">
+        <a-col :span="8" :offset="8">
+          <List :title="'每日新闻60s'" :list="newsList" />
+        </a-col>
+      </div>
+      <div v-if="activeKey === '3'">
+        <a-col :span="8" :offset="8">
+          <CardImage :bing="bing" />
+        </a-col>
+      </div>
+      <div v-if="activeKey === '4'">
+        <a-col :span="16" :offset="4">
+          <HistoryTable :historyData="historyData" />
+        </a-col>
+      </div>
+      <div v-if="activeKey === '5'">
+        <a-col :span="8" :offset="8">
+          <List :title="'bili热榜'" :list="biliHotSearch" />
+        </a-col>
+      </div>
+      <div v-if="activeKey === '6'">
+        <a-col :span="8" :offset="8">
+          <List :title="'微博热榜'" :list="weiboHotSearch" />
+        </a-col>
+      </div>
+      <div v-if="activeKey === '7'">
+        <a-col :span="8" :offset="8">
+          <List :title="'知乎热榜'" :list="zhihuHotSearch" />
+        </a-col>
+      </div>
+      <div v-if="activeKey === '8'">
+        <a-col :span="8" :offset="8">
+          <List :title="'头条热榜'" :list="toutiaoHotSearch" />
+        </a-col>
+      </div>
+      <div v-if="activeKey === '9'">
+        <a-col :span="16" :offset="4">
+          <HotTop :dataSource="douyinHotSearch" />
+        </a-col>
+      </div>
+    </a-layout-content>
+  </a-layout>
 </template>
 
 <script>
@@ -62,7 +82,9 @@ import List from './components/List.vue';
 import CardImage from './components/CardImage.vue';
 import HistoryTable from './components/Table.vue';
 import HotTop from './components/HotList.vue';
+
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+
 export default {
   components: {
     Card,
@@ -73,6 +95,7 @@ export default {
   },
   data() {
     return {
+      activeKey: '2', // 默认激活的 tab
       epicGames: {},  // epic信息
       newsList: [],  // 每日新闻60s
       bing: {},  // bing壁纸
@@ -82,6 +105,18 @@ export default {
       zhihuHotSearch: {},  // 知乎热榜
       toutiaoHotSearch: {},  // 头条热榜
       douyinHotSearch: {},  // 抖音热榜
+      backgroundImage: '', // 当前背景图 URL
+      backgroundUrls: [
+        'https://t.alcy.cc/mp',
+        'https://www.loliapi.com/acg',
+        'https://www.dmoe.cc/random.php',
+        'https://api.btstu.cn/sjbz/api.php',
+        'https://t.alcy.cc/ys',
+        'https://img.paulzzh.com/touhou/random',
+        'https://t.alcy.cc/moez',
+        'https://t.alcy.cc/ycy',
+      ], // 从多个平台获取的背景图 URL 列表
+      isBackgroundLoading: true, // 背景图加载状态
     };
   },
   async created() {
@@ -94,12 +129,46 @@ export default {
     await this.fetchWeiboHotSearch();
     await this.fetchZhihuHotSearch();
     await this.fetchToutiaoHotSearch();
+    await this.setRandomBackground(); // 设置随机背景图
   },
   methods: {
+    handleTabChange(key) {
+      this.activeKey = key;
+    },
+    // 设置随机背景图
+    async setRandomBackground() {
+      if (this.backgroundUrls.length > 0) {
+        const randomIndex = Math.floor(Math.random() * this.backgroundUrls.length);
+        const url = this.backgroundUrls[randomIndex];
+        await this.loadBackgroundImage(url);
+      } else {
+        console.error('没有可用的背景图 URL');
+        this.isBackgroundLoading = false; // 停止加载动画
+      }
+    },
+    // 加载背景图
+    loadBackgroundImage(url) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.src = url;
+        img.onload = () => {
+          this.backgroundImage = url;
+          document.body.style.backgroundImage = `url(${url})`;
+          document.body.style.backgroundSize = 'cover';
+          document.body.style.backgroundPosition = 'center';
+          this.isBackgroundLoading = false; // 停止加载动画
+          resolve();
+        };
+        img.onerror = () => {
+          console.error('背景图加载失败:', url);
+          this.isBackgroundLoading = false; // 停止加载动画
+          resolve();
+        };
+      });
+    },
     // epic游戏
     async fetchEpicGames() {
       await axios.get(`${apiBaseUrl}/epic`).then(response => {
-        //console.log('log:', response.data);
         this.epicGames.list = [];
         if (response.data.data) {
           this.epicGames.list = response.data.data.map(game => ({
@@ -115,7 +184,6 @@ export default {
     async fetchNews() {
       try {
         const response = await axios.get(`${apiBaseUrl}/?v2=1`);
-        //console.log('新闻log', response.data);
         if (response.data.data && response.data.data.news) {
           this.newsList = response.data.data.news;
         } else {
@@ -130,7 +198,6 @@ export default {
     async fetchBing() {
       try {
         const response = await axios.get(`${apiBaseUrl}/bing`);
-        //console.log('新闻log', response.data);
         if (response.data.data) {
           this.bing = response.data.data;
         } else {
@@ -145,7 +212,6 @@ export default {
     async fetchHistoryData() {
       try {
         const response = await axios.get(`${apiBaseUrl}/today_in_history`);
-        //console.log('历史log', response.data);
         if (response.data.data) {
           this.historyData = response.data.data.map(item => ({
             ...item,
@@ -163,7 +229,6 @@ export default {
     async fetchDouyinHotSearch() {
       try {
         const response = await axios.get(`${apiBaseUrl}/douyin`);
-        //console.log('新闻log', response.data);
         if (response.data.data) {
           this.douyinHotSearch = response.data.data.map(item => ({
             ...item,
@@ -180,7 +245,6 @@ export default {
     async fetchBiliHotSearch() {
       try {
         const response = await axios.get(`${apiBaseUrl}/bili`);
-        //console.log('新闻log', response.data);
         if (response.data.data) {
           this.biliHotSearch = response.data.data.map(item => ({
             ...item,
@@ -197,7 +261,6 @@ export default {
     async fetchWeiboHotSearch() {
       try {
         const response = await axios.get(`${apiBaseUrl}/weibo`);
-        //console.log('新闻log', response.data);
         if (response.data.data) {
           this.weiboHotSearch = response.data.data.map(item => ({
             ...item,
@@ -214,7 +277,6 @@ export default {
     async fetchZhihuHotSearch() {
       try {
         const response = await axios.get(`${apiBaseUrl}/zhihu`);
-        //console.log('新闻log', response.data);
         if (response.data.data) {
           this.zhihuHotSearch = response.data.data.map(item => ({
             ...item,
@@ -223,7 +285,6 @@ export default {
           console.error('响应数据中没有 news 属性');
         }
       } catch (error) {
-        //console.error('请求失败:', error);
         this.zhihuHotSearch = ['无法获取新闻数据，请稍后再试。'];
       }
     },
@@ -231,7 +292,6 @@ export default {
     async fetchToutiaoHotSearch() {
       try {
         const response = await axios.get(`${apiBaseUrl}/toutiao`);
-        //console.log('新闻log', response.data);
         if (response.data.data) {
           this.toutiaoHotSearch = response.data.data.map(item => ({
             ...item,
@@ -249,5 +309,45 @@ export default {
 </script>
 
 <style>
-/* 可以添加一些自定义样式来进一步美化界面 */
+/* 全局样式 */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f0f2f5;
+  /* 默认背景色 */
+  transition: background-image 0.5s ease-in-out;
+  /* 背景图切换动画 */
+}
+
+/* 加载动画样式 */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  /* 半透明背景 */
+  z-index: 1000;
+  /* 确保在最上层 */
+}
+
+/* 背景图样式 */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-image: var(--background-image);
+  /* 动态背景图 */
+  background-size: cover;
+  background-position: center;
+}
 </style>
