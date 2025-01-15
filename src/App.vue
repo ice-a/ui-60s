@@ -8,8 +8,8 @@
     <!-- Header -->
     <a-layout-header style="padding-top: 20px; background: transparent;">
       <a-row>
-        <a-col :span="12" :offset="8">
-          <a-space :size="'large'">
+        <a-col :span="24">
+          <a-space :size="'small'" wrap>
             <a-button shape="round" @click="handleTabChange('1')">epic游戏</a-button>
             <a-button shape="round" @click="handleTabChange('2')">每日新闻60s</a-button>
             <a-button shape="round" @click="handleTabChange('3')">bing壁纸</a-button>
@@ -25,49 +25,49 @@
     </a-layout-header>
 
     <!-- Content -->
-    <a-layout-content style="margin-top: 20px; width: 60%; margin-left: 20%;">
+    <a-layout-content style="margin-top: 20px; width: 100%; padding: 0 10px;">
       <div v-if="activeKey === '1'">
-        <a-col :span="8" :offset="8">
+        <a-col :span="24">
           <Card :title="epicGames.title" :list="epicGames.list" />
         </a-col>
       </div>
       <div v-if="activeKey === '2'">
-        <a-col :span="8" :offset="8">
+        <a-col :span="24">
           <List :title="'每日新闻60s'" :list="newsList" />
         </a-col>
       </div>
       <div v-if="activeKey === '3'">
-        <a-col :span="8" :offset="8">
+        <a-col :span="24">
           <CardImage :bing="bing" />
         </a-col>
       </div>
       <div v-if="activeKey === '4'">
-        <a-col :span="16" :offset="4">
+        <a-col :span="24">
           <HistoryTable :historyData="historyData" />
         </a-col>
       </div>
       <div v-if="activeKey === '5'">
-        <a-col :span="8" :offset="8">
+        <a-col :span="24">
           <List :title="'bili热榜'" :list="biliHotSearch" />
         </a-col>
       </div>
       <div v-if="activeKey === '6'">
-        <a-col :span="8" :offset="8">
+        <a-col :span="24">
           <List :title="'微博热榜'" :list="weiboHotSearch" />
         </a-col>
       </div>
       <div v-if="activeKey === '7'">
-        <a-col :span="8" :offset="8">
+        <a-col :span="24">
           <List :title="'知乎热榜'" :list="zhihuHotSearch" />
         </a-col>
       </div>
       <div v-if="activeKey === '8'">
-        <a-col :span="8" :offset="8">
+        <a-col :span="24">
           <List :title="'头条热榜'" :list="toutiaoHotSearch" />
         </a-col>
       </div>
       <div v-if="activeKey === '9'">
-        <a-col :span="16" :offset="4">
+        <a-col :span="24">
           <HotTop :dataSource="douyinHotSearch" />
         </a-col>
       </div>
@@ -318,6 +318,7 @@ body {
   /* 默认背景色 */
   transition: background-image 0.5s ease-in-out;
   /* 背景图切换动画 */
+  overflow: hidden; /* 禁止页面滚动 */
 }
 
 /* 加载动画样式 */
@@ -349,5 +350,24 @@ body::before {
   /* 动态背景图 */
   background-size: cover;
   background-position: center;
+}
+
+/* 媒体查询适配手机屏幕 */
+@media (max-width: 768px) {
+  .ant-layout-header {
+    padding: 10px !important;
+  }
+
+  .ant-space {
+    justify-content: center;
+  }
+
+  .ant-btn {
+    margin: 5px;
+  }
+
+  .ant-layout-content {
+    padding: 0 10px !important;
+  }
 }
 </style>

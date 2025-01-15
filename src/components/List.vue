@@ -3,7 +3,7 @@
       <template #header>
         {{ title }}
       </template>
-      <a-list-item v-for="(item, index) in list" :key="index" :style="{ color: 'blue', fontWeight: 'bold', fontSize: '30px'}" >
+      <a-list-item v-for="(item, index) in list" :key="index" :style="{ color: 'blue', fontWeight: 'bold'}" >
         {{ item.word || item.query || item.keyword || item}}
         <span v-if="item.num !== undefined">- Num: {{ item.num }} </span>
         <span v-if="item.rank !== undefined">- Rank: {{ item.rank }} </span>
